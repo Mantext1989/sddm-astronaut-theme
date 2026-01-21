@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-readonly THEME_REPO="https://github.com/Keyitdev/sddm-astronaut-theme.git"
+readonly THEME_REPO="https://github.com/Mantext1989/sddm-astronaut-theme.git"
 readonly THEME_NAME="sddm-astronaut-theme"
 readonly THEMES_DIR="/usr/share/sddm/themes"
 readonly PATH_TO_GIT_CLONE="$HOME/$THEME_NAME"
@@ -119,7 +119,10 @@ install_deps() {
 
 # Clone repository
 clone_repo() {
-    [[ -d "$PATH_TO_GIT_CLONE" ]] && mv "$PATH_TO_GIT_CLONE" "${PATH_TO_GIT_CLONE}_$DATE"
+    if [[ -d "$PATH_TO_GIT_CLONE" ]]; then
+        info "Existing repository found at $PATH_TO_GIT_CLONE. Skipping clone."
+        return 0
+    fi
     spin "Cloning repository..." git clone -b master --depth 1 "$THEME_REPO" "$PATH_TO_GIT_CLONE"
     info "Repository cloned to $PATH_TO_GIT_CLONE"
 }
